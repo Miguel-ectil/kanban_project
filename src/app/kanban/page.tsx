@@ -1,28 +1,41 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTasks } from "@/context/TaskContext";
 import { mockTasks } from "@/mocks/tasks";
 import { KanbanBoard } from "@/components/kanban/KanbanBoard";
+import { Button } from "@mui/material";
+import { TaskModal } from "@/components/form/TaskForm";
 
 export default function KanbanPage() {
     const { state, dispatch } = useTasks();
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         dispatch({ type: "SET_TASKS", payload: mockTasks });
     }, [dispatch]);
 
     return (
-        <div className=" px-6 py-4">
-            <h1 className="text-2xl font-bold mb-20">
-                Quadro Kanban
-            </h1>
+        <div className="h-full px-6 py-4 space-y-4">
+            <div className="flex items-center justify-between">
+                <h1 className="text-2xl font-semibold">
+                    Kanban
+                </h1>
 
-            {/* <pre className="bg-gray-100 p-4 rounded">
-                {JSON.stringify(state.tasks, null, 2)}
-            </pre> */}
-            <div className="flex  items-center justify-center font-sans">
+                <Button
+                    variant="contained"
+                    onClick={() => setOpen(true)}
+                >
+                    Nova Tarefa
+                </Button>
+            </div>
+
+            <div className="flex items-center justify-center font-sans">
                 <KanbanBoard />
             </div>
+            <TaskModal
+                open={open}
+                onClose={() => setOpen(false)}
+            />
         </div>
     );
 }
