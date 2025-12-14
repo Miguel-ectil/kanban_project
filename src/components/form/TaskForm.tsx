@@ -118,7 +118,7 @@ export function TaskModal({ open, onClose, task }: Props) {
                         rows={3}
                         size="small"
                     />
-                    
+
                     <TextField
                         label="Email"
                         name="email"
