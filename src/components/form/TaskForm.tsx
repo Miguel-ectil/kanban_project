@@ -79,87 +79,106 @@ export function TaskModal({ open, onClose, task }: Props) {
             onClose={onClose}
             fullWidth
             maxWidth="sm"
+            PaperProps={{
+                className: "rounded-xl",
+            }}
         >
-            <DialogTitle className="font-semibold">
+            <DialogTitle className="font-semibold text-lg px-6 pt-5">
                 {task ? "Editar Tarefa" : "Nova Tarefa"}
             </DialogTitle>
 
-            <DialogContent className="space-y-4 mt-2">
-                <TextField
-                    label="Título"
-                    name="title"
-                    value={form.title}
-                    onChange={handleChange}
-                    fullWidth
-                    required
-                />
-
-                <TextField
-                    label="Descrição"
-                    name="description"
-                    value={form.description}
-                    onChange={handleChange}
-                    fullWidth
-                    multiline
-                    rows={3}
-                />
-
-                <TextField
-                    select
-                    label="Status"
-                    name="status"
-                    value={form.status}
-                    onChange={handleChange}
-                    fullWidth
-                >
-                    {STATUS_OPTIONS.map((option) => (
-                        <MenuItem
-                            key={option.value}
-                            value={option.value}
-                        >
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
-
-                <div className="grid grid-cols-2 gap-4">
+            <DialogContent className="px-6 py-4">
+                <div className="flex flex-col gap-4">
                     <TextField
                         label="Responsável"
                         name="responsible"
                         value={form.responsible}
                         onChange={handleChange}
                         required
+                        fullWidth
+                        size="small"
+                    />
+                    <TextField
+                        label="Título"
+                        name="title"
+                        value={form.title}
+                        onChange={handleChange}
+                        fullWidth
+                        required
+                        size="small"
                     />
 
+                    <TextField
+                        label="Descrição"
+                        name="description"
+                        value={form.description}
+                        onChange={handleChange}
+                        fullWidth
+                        multiline
+                        rows={3}
+                        size="small"
+                    />
+                    
                     <TextField
                         label="Email"
                         name="email"
                         value={form.email}
                         onChange={handleChange}
                         type="email"
+                        fullWidth
+                        size="small"
                     />
-                </div>
 
-                <TextField
-                    label="Data Limite"
-                    name="dueDate"
-                    type="date"
-                    value={form.dueDate}
-                    onChange={handleChange}
-                    InputLabelProps={{ shrink: true }}
-                    fullWidth
-                    required
-                />
+                    {/* Grid responsivo */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <TextField
+                            select
+                            label="Status"
+                            name="status"
+                            value={form.status}
+                            onChange={handleChange}
+                            fullWidth
+                            size="small"
+                        >
+                            {STATUS_OPTIONS.map((option) => (
+                                <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+
+                        <TextField
+                            label="Data Limite"
+                            name="dueDate"
+                            type="date"
+                            value={form.dueDate}
+                            onChange={handleChange}
+                            InputLabelProps={{ shrink: true }}
+                            fullWidth
+                            required
+                            size="small"
+                        />
+                    </div>
+                </div>
             </DialogContent>
 
-            <DialogActions className="px-6 pb-4">
-                <Button onClick={onClose} color="inherit">
+            <DialogActions className="px-6 pb-5 pt-2 flex flex-col-reverse sm:flex-row gap-2 sm:gap-3">
+                <Button
+                    onClick={onClose}
+                    color="error"
+                    fullWidth
+                    className="sm:w-auto"
+                    variant="outlined"
+                >
                     Cancelar
                 </Button>
 
                 <Button
                     onClick={handleSubmit}
                     variant="contained"
+                    fullWidth
+                    className="sm:w-auto"
+                    color="success"
                 >
                     {task ? "Salvar" : "Criar"}
                 </Button>
