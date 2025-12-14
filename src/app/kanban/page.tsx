@@ -21,12 +21,12 @@ export default function KanbanPage() {
                     Kanban
                 </h1>
 
-                <Button
+                {/* <Button
                     variant="contained"
                     onClick={() => setOpen(true)}
                 >
                     Nova Tarefa
-                </Button>
+                </Button> */}
             </div>
 
             <div className="flex items-center justify-center font-sans">
