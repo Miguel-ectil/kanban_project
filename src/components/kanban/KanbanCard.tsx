@@ -5,7 +5,7 @@ import { CSS } from "@dnd-kit/utilities";
 import type { Task } from "@/types/task";
 
 export function KanbanCard({ task }: { task: Task }) {
-    const { attributes, listeners, setNodeRef, transform } =
+    const { attributes, listeners, setNodeRef, transform, isDragging } =
         useDraggable({
             id: task.id,
         });
@@ -20,16 +20,45 @@ export function KanbanCard({ task }: { task: Task }) {
             style={style}
             {...listeners}
             {...attributes}
-            className="bg-gray-900 p-3 rounded shadow cursor-grab"
+            className={`
+        bg-[var(--surface)]
+        border border-[var(--border)]
+        p-4
+        rounded-xl
+        shadow-sm
+        cursor-grab
+        transition
+        space-y-2
+        ${isDragging
+                    ? "opacity-80 shadow-md"
+                    : "hover:shadow-md"
+                }
+      `}
         >
-            <h3 className="font-medium">{task.title}</h3>
-            <p className="text-sm text-gray-800">
-                {task.description}
-            </p>
+            {/* Título */}
+            <h3 className="text-sm font-semibold leading-snug text-[var(--foreground)]">
+                {task.title}
+            </h3>
 
-            <span className="text-xs text-gray-400">
-                {task.responsible.name}
-            </span>
+            {/* Descrição */}
+            {task.description && (
+                <p className="text-xs leading-relaxed text-gray-500 line-clamp-3">
+                    {task.description}
+                </p>
+            )}
+
+            {/* Footer */}
+            <div className="flex items-center justify-between pt-2">
+                <span className="text-[10px] text-gray-400">
+                    {task.responsible.name}
+                </span>
+
+                {task.status === "ATRASADO" && (
+                    <span className="text-[10px] font-medium text-[var(--danger)]">
+                        Atrasado
+                    </span>
+                )}
+            </div>
         </div>
     );
 }
